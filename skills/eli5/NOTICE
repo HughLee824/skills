@@ -1,8 +1,8 @@
-codex-eli5
+eli5
 Copyright 2026 HughLee824
 
-This project is a rewritten Codex adaptation inspired by the "eli5" skill
-from Anthropic's claude-plugins-community repository, originally authored by
+This project is a portable rewrite inspired by the "eli5" skill from
+Anthropic's claude-plugins-community repository, originally authored by
 Thariq Shihipar:
 https://github.com/anthropics/claude-plugins-community/tree/main/eli5
 

@@ -1,0 +1,44 @@
+{
+  "name": "hughlee-skills",
+  "description": "Focused Agent Skills for aligning intent and explaining complex ideas clearly.",
+  "owner": {
+    "name": "HughLee824",
+    "url": "https://github.com/HughLee824"
+  },
+  "plugins": [
+    {
+      "name": "common-ground",
+      "displayName": "Common Ground",
+      "description": "Establish shared understanding for ambiguous project work before consequential implementation.",
+      "source": "./skills/common-ground",
+      "strict": false,
+      "skills": ["./"],
+      "author": {
+        "name": "HughLee824",
+        "url": "https://github.com/HughLee824"
+      },
+      "homepage": "https://github.com/HughLee824/skills/tree/main/skills/common-ground",
+      "repository": "https://github.com/HughLee824/skills",
+      "license": "Apache-2.0",
+      "keywords": ["agent-skills", "alignment", "productivity"],
+      "category": "productivity"
+    },
+    {
+      "name": "eli5",
+      "displayName": "ELI5",
+      "description": "Create beginner-friendly visual explainers as portable, standalone HTML files.",
+      "source": "./skills/eli5",
+      "strict": false,
+      "skills": ["./"],
+      "author": {
+        "name": "HughLee824",
+        "url": "https://github.com/HughLee824"
+      },
+      "homepage": "https://github.com/HughLee824/skills/tree/main/skills/eli5",
+      "repository": "https://github.com/HughLee824/skills",
+      "license": "Apache-2.0",
+      "keywords": ["agent-skills", "visual-explanation", "education"],
+      "category": "productivity"
+    }
+  ]
+}

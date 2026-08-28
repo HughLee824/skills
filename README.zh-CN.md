@@ -4,7 +4,7 @@
 
 一组小而可审计的 Agent Skills：在理解偏差演变成实现偏差之前，先把它找出来并对齐。
 
-本仓库收录目标明确、可独立安装的 skills。核心指令遵循开放的 [Agent Skills](https://agentskills.io/) 格式，`agents/` 目录下的可选元数据则用于改善 Codex 中的使用体验。
+本仓库收录目标明确、可独立安装的 skills。核心指令遵循开放的 [Agent Skills](https://agentskills.io/) 格式，并通过可选集成改善 Codex 与 Claude Code 中的使用体验。
 
 ## 为什么做这个项目
 
@@ -26,7 +26,7 @@ Agent 失败不只是因为它不会写代码。很多时候，真正的问题�
 | [`common-ground`](skills/common-ground/) | 双方对意图、术语、验收标准或关键假设的理解可能不一致 | 一份共享工作地图，明确区分事实、决定、假设、未知项与偏离规则 |
 | [`eli5`](skills/eli5/) | 复杂主题更适合通过图示和少量文字来理解 | 一份可移植、可独立运行的 HTML 视觉解说页面 |
 
-## 安装
+## 使用 `skills` CLI 安装
 
 安装前先查看仓库中可用的 skills：
 
@@ -41,30 +41,66 @@ npx skills add HughLee824/skills --skill common-ground -g -a codex
 npx skills add HughLee824/skills --skill eli5 -g -a codex
 ```
 
-移除 `-g` 即可改为项目级安装。也可以把 `codex` 替换为 [`skills`](https://skills.sh/) CLI 支持的其他 agent。
+为 Claude Code 全局安装单个 skill：
+
+```bash
+npx skills add HughLee824/skills --skill common-ground -g -a claude-code
+npx skills add HughLee824/skills --skill eli5 -g -a claude-code
+```
+
+移除 `-g` 即可改为项目级安装。
 
 Skill 会以当前 agent 已拥有的权限运行。安装或调用前，请先阅读对应的 `SKILL.md` 以及其中包含的脚本。
 
-### 为 Codex 手动安装
+## 通过 [Claude Code marketplace](https://code.claude.com/docs/en/plugin-marketplaces) 安装
 
-克隆仓库，然后把所需 skill 复制到用户级 skills 目录：
+只需添加一次本仓库 marketplace：
+
+```text
+/plugin marketplace add HughLee824/skills
+```
+
+之后可以独立安装任一 skill：
+
+```text
+/plugin install common-ground@hughlee-skills
+/plugin install eli5@hughlee-skills
+```
+
+如果 Claude Code 提示需要激活新安装的 plugin，请运行 `/reload-plugins`。通过 marketplace 安装后，对应的完整命令名为 `/common-ground:common-ground` 与 `/eli5:eli5`。
+
+### 手动安装
+
+克隆仓库，然后把所需 skill 复制到对应 agent 的用户级 skills 目录：
 
 ```bash
 git clone https://github.com/HughLee824/skills.git agent-skills
+
+# Codex
 mkdir -p "$HOME/.agents/skills"
 cp -R agent-skills/skills/common-ground "$HOME/.agents/skills/common-ground"
+
+# Claude Code
+mkdir -p "$HOME/.claude/skills"
+cp -R agent-skills/skills/common-ground "$HOME/.claude/skills/common-ground"
 ```
 
-如果新 skill 没有自动出现，请重启 Codex。
+如果新 skill 没有自动出现，请重启对应 agent。
 
 ## 使用
 
 需要明确启用某个工作流时，可以直接调用对应 skill：
 
 ```text
+# Codex
 $common-ground 在开始实现结账流程改版前，先帮我们对齐理解。
 
 $eli5 用图解释 DNS 如何把域名转换成服务器地址。
+
+# 通过 skills CLI 或手动安装到 Claude Code
+/common-ground 在开始实现结账流程改版前，先帮我们对齐理解。
+
+/eli5 用图解释 DNS 如何把域名转换成服务器地址。
 ```
 
 当请求与 `description` 明确匹配时，这两个 skills 也可能被自动选择。
@@ -72,9 +108,10 @@ $eli5 用图解释 DNS 如何把域名转换成服务器地址。
 ## 兼容性
 
 - 每个 skill 都是独立目录，并包含 Agent Skills 格式要求的 `SKILL.md`。
-- 已使用 Codex 和 `skills` CLI 完成验证。
+- 已使用 Codex、Claude Code 和 `skills` CLI 完成验证。
 - 在实际可行的前提下，核心指令不依赖特定 agent。
 - `agents/openai.yaml` 提供可选的 Codex 展示元数据与调用策略。
+- `.claude-plugin/marketplace.json` 将每个 skill 暴露为可独立安装的 Claude Code plugin，同时避免复制核心指令。
 
 其他 agent 能否使用，取决于其对 Agent Skills 格式以及对应 skill 所需能力的支持程度。
 
@@ -82,6 +119,8 @@ $eli5 用图解释 DNS 如何把域名转换成服务器地址。
 
 ```text
 .
+├── .claude-plugin/
+│   └── marketplace.json
 ├── .github/
 │   └── PULL_REQUEST_TEMPLATE.md
 ├── docs/
@@ -122,7 +161,7 @@ $eli5 用图解释 DNS 如何把域名转换成服务器地址。
 ## 致谢
 
 - `common-ground` 受到 known knowns、known unknowns、unknown knowns 与 unknown unknowns 框架、[Matt Pocock 的 Grilling skill](https://github.com/mattpocock/skills/blob/main/skills/productivity/grilling/SKILL.md)，以及 Anthropic 的[未知项探索指南](https://claude.com/blog/a-field-guide-to-claude-fable-finding-your-unknowns)启发。
-- `eli5` 是面向 Codex 的重写版本，其灵感来自 Anthropic [`claude-plugins-community`](https://github.com/anthropics/claude-plugins-community/tree/main/eli5) 中由 Thariq Shihipar 最初编写的 `eli5` skill。详情请参阅 [`skills/eli5/NOTICE`](skills/eli5/NOTICE)。
+- `eli5` 是一个可移植的重写版本，其灵感来自 Anthropic [`claude-plugins-community`](https://github.com/anthropics/claude-plugins-community/tree/main/eli5) 中由 Thariq Shihipar 最初编写的 `eli5` skill。详情请参阅 [`skills/eli5/NOTICE`](skills/eli5/NOTICE)。
 
 以上内容仅作为来源致谢，不构成运行时依赖。
 

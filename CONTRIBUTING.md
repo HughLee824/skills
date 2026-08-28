@@ -31,6 +31,7 @@ When changing a skill:
 - Preserve authorization boundaries: a skill must not imply permission for unrelated external actions.
 - Include license and attribution information for imported or adapted work.
 - Update the catalog in `README.md` when adding, removing, or renaming a skill.
+- Keep `.claude-plugin/marketplace.json` in sync so every published skill remains independently installable in Claude Code.
 
 ## Validate your change
 
@@ -38,6 +39,7 @@ Confirm the repository can discover every skill:
 
 ```bash
 npx skills add . --list
+claude plugin validate . --strict
 ```
 
 For each changed skill:
