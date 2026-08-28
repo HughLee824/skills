@@ -1,5 +1,7 @@
 # Agent Skills
 
+[English](README.md) | [简体中文](README.zh-CN.md)
+
 Small, auditable agent skills for closing understanding gaps before they become implementation gaps.
 
 This repository contains focused skills that can be installed independently. The core instructions follow the open [Agent Skills](https://agentskills.io/) format, while optional metadata under `agents/` improves the experience in Codex.
@@ -94,6 +96,7 @@ Compatibility with another agent depends on that agent's support for the Agent S
 ├── LICENSE
 ├── NOTICE
 ├── README.md
+├── README.zh-CN.md
 └── SECURITY.md
 ```
 
