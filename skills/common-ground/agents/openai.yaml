@@ -1,0 +1,7 @@
+interface:
+  display_name: "Common Ground"
+  short_description: "Align intent, unknowns, and deviation rules"
+  default_prompt: "Use $common-ground to align our understanding, surface material unknowns, and set safe deviation rules before implementation."
+
+policy:
+  allow_implicit_invocation: true

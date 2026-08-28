@@ -1,0 +1,4 @@
+interface:
+  display_name: "ELI5 Visual Explainer"
+  short_description: "Turn complex topics into clear visual explainers"
+  default_prompt: "Use $eli5 to explain how DNS works with a simple visual."
