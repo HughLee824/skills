@@ -10,6 +10,8 @@
 
 Agent 失败不只是因为它不会写代码。很多时候，真正的问题是意图、术语、假设或解释在未被察觉时逐渐偏离。
 
+![两种缩小理解差距的方式：common-ground 将不一致的地图对齐为共享蓝图，eli5 将复杂系统转化为清晰的视觉模型。](docs/assets/skills-overview.webp)
+
 这个集合从两个方向缩小理解差距：
 
 - `common-ground` 帮助用户与 agent 在行动前发现足以影响结果的认知差距。
@@ -82,6 +84,9 @@ $eli5 用图解释 DNS 如何把域名转换成服务器地址。
 .
 ├── .github/
 │   └── PULL_REQUEST_TEMPLATE.md
+├── docs/
+│   └── assets/
+│       └── skills-overview.webp
 ├── skills/
 │   ├── common-ground/
 │   │   ├── SKILL.md

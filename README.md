@@ -10,6 +10,8 @@ This repository contains focused skills that can be installed independently. The
 
 Agents do not only fail because they cannot write the code. They also fail when intent, terminology, assumptions, or explanations drift apart unnoticed.
 
+![Two complementary ways to close understanding gaps: Common Ground aligns mismatched maps into a shared blueprint, while ELI5 turns a tangled system into a clear visual model.](docs/assets/skills-overview.webp)
+
 This collection addresses both sides of that problem:
 
 - `common-ground` helps a user and an agent discover material gaps before acting on them.
@@ -82,6 +84,9 @@ Compatibility with another agent depends on that agent's support for the Agent S
 .
 ├── .github/
 │   └── PULL_REQUEST_TEMPLATE.md
+├── docs/
+│   └── assets/
+│       └── skills-overview.webp
 ├── skills/
 │   ├── common-ground/
 │   │   ├── SKILL.md
