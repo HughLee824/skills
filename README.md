@@ -1,39 +1,123 @@
 # Agent Skills
 
-A provider-neutral collection of reusable agent skills. Each skill is self-contained under `skills/<skill-name>/` and can be installed or copied independently.
+Small, auditable agent skills for closing understanding gaps before they become implementation gaps.
 
-## Catalog
+This repository contains focused skills that can be installed independently. The core instructions follow the open [Agent Skills](https://agentskills.io/) format, while optional metadata under `agents/` improves the experience in Codex.
 
-| Skill | Purpose | Invocation |
+## Why this exists
+
+Agents do not only fail because they cannot write the code. They also fail when intent, terminology, assumptions, or explanations drift apart unnoticed.
+
+This collection addresses both sides of that problem:
+
+- `common-ground` helps a user and an agent discover material gaps before acting on them.
+- `eli5` turns a complex topic into a visual explanation that is easy to inspect and share.
+
+The goal is not to accumulate as many skills as possible. It is to maintain a small set of useful, understandable workflows with explicit boundaries.
+
+## Skills
+
+| Skill | Use it when | Result |
 | --- | --- | --- |
-| `common-ground` | Align intent, evidence, assumptions, and deviation rules for ambiguous project work | `$common-ground` |
-| `eli5` | Create a beginner-friendly visual explainer as a portable standalone HTML file | `$eli5` |
+| [`common-ground`](skills/common-ground/) | Intent, terminology, acceptance criteria, or consequential assumptions may differ | A shared working map with visible facts, decisions, assumptions, unknowns, and deviation rules |
+| [`eli5`](skills/eli5/) | A complex topic would be easier to understand through diagrams and minimal prose | A portable, standalone visual explainer in HTML |
 
-## Repository layout
+## Install
+
+Review the available skills before installing them:
+
+```bash
+npx skills add HughLee824/skills --list
+```
+
+Install one skill globally for Codex:
+
+```bash
+npx skills add HughLee824/skills --skill common-ground -g -a codex
+npx skills add HughLee824/skills --skill eli5 -g -a codex
+```
+
+Omit `-g` for a project-scoped installation. Replace `codex` with another agent supported by the [`skills`](https://skills.sh/) CLI.
+
+Agent skills run with the permissions available to your agent. Read a skill's `SKILL.md` and any bundled scripts before installing or invoking it.
+
+### Manual installation for Codex
+
+Clone the repository and copy the skill you want into your user-level skills directory:
+
+```bash
+git clone https://github.com/HughLee824/skills.git agent-skills
+mkdir -p "$HOME/.agents/skills"
+cp -R agent-skills/skills/common-ground "$HOME/.agents/skills/common-ground"
+```
+
+Restart Codex if the new skill does not appear automatically.
+
+## Use
+
+Invoke a skill explicitly when you want its workflow:
+
+```text
+$common-ground Help us align on the checkout redesign before implementation.
+
+$eli5 Explain how DNS turns a domain name into a server address.
+```
+
+Both skills may also be selected automatically when the request clearly matches their descriptions.
+
+## Compatibility
+
+- Structured as standalone Agent Skills with a required `SKILL.md` per skill.
+- Tested with Codex and the `skills` CLI.
+- Core instructions are kept independent of a specific agent where practical.
+- `agents/openai.yaml` provides optional Codex-facing display metadata and invocation policy.
+
+Compatibility with another agent depends on that agent's support for the Agent Skills format and the capabilities required by the individual skill.
+
+## Project structure
 
 ```text
 .
+├── .github/
+│   └── PULL_REQUEST_TEMPLATE.md
+├── skills/
+│   ├── common-ground/
+│   │   ├── SKILL.md
+│   │   ├── agents/
+│   │   └── references/
+│   └── eli5/
+│       ├── SKILL.md
+│       ├── agents/
+│       ├── LICENSE
+│       └── NOTICE
+├── CONTRIBUTING.md
+├── LICENSE
+├── NOTICE
 ├── README.md
-└── skills/
-    ├── common-ground/
-    │   ├── SKILL.md
-    │   ├── agents/
-    │   └── references/
-    └── eli5/
-        ├── SKILL.md
-        ├── agents/
-        ├── LICENSE
-        └── NOTICE
+└── SECURITY.md
 ```
 
-## Collection conventions
+## Design principles
 
-- Keep one skill per directory, with the directory name matching the `name` in its `SKILL.md` frontmatter.
-- Keep core instructions provider-neutral. Put optional runtime-specific interface metadata under `agents/`.
-- Keep references, scripts, assets, licenses, and notices inside the skill that owns them so each skill remains portable.
-- Avoid cross-skill relative dependencies unless the dependency is explicit and genuinely required.
-- Validate every changed skill independently before publishing it.
+- **Focused:** one skill, one coherent job.
+- **Discriminating:** descriptions say when a skill should and should not activate.
+- **Auditable:** important decisions and boundaries live in readable Markdown.
+- **Portable:** optional references, assets, metadata, and attribution travel with the skill that owns them.
+- **Evidence-driven:** changes should follow observed failures or realistic usage, not speculative complexity.
 
-## Licensing
+## Contributing
 
-Licensing is declared per skill. The imported `eli5` skill is distributed under Apache-2.0 and retains its original notice in `skills/eli5/`.
+Bug reports, documentation fixes, and focused skill improvements are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request.
+
+For security-sensitive reports, follow [SECURITY.md](SECURITY.md).
+
+## Acknowledgements
+
+- `common-ground` was informed by the known/unknown framing, [Matt Pocock's Grilling skill](https://github.com/mattpocock/skills/blob/main/skills/productivity/grilling/SKILL.md), and Anthropic's [field guide to finding unknowns](https://claude.com/blog/a-field-guide-to-claude-fable-finding-your-unknowns).
+- `eli5` is a rewritten Codex adaptation inspired by the `eli5` skill from Anthropic's [`claude-plugins-community`](https://github.com/anthropics/claude-plugins-community/tree/main/eli5), originally authored by Thariq Shihipar. See [`skills/eli5/NOTICE`](skills/eli5/NOTICE) for details.
+
+These references are acknowledgements, not runtime dependencies.
+
+## License
+
+Licensed under the [Apache License 2.0](LICENSE). Third-party attribution and adaptation notices are preserved in [NOTICE](NOTICE) and within the skill that owns them.

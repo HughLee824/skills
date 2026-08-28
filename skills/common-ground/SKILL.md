@@ -1,6 +1,7 @@
 ---
 name: common-ground
 description: Establish and maintain enough shared understanding for ambiguous project work. Use when user intent, terminology, acceptance criteria, tacit preferences, or consequential assumptions may differ; after a misunderstanding; or before long-running work whose deviations would be expensive. Do not use for trivial mechanical tasks with clear, verifiable outcomes.
+license: Apache-2.0
 ---
 
 # Common Ground

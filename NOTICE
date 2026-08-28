@@ -1,0 +1,11 @@
+Agent Skills
+Copyright 2026 HughLee824
+
+This distribution includes the eli5 skill, a rewritten Codex adaptation
+inspired by the "eli5" skill from Anthropic's claude-plugins-community
+repository, originally authored by Thariq Shihipar:
+https://github.com/anthropics/claude-plugins-community/tree/main/eli5
+
+The adaptation changes the invocation syntax, artifact behavior, portability,
+accessibility guidance, and rendered-output verification. Its portable notice
+is retained in skills/eli5/NOTICE.
